@@ -1,7 +1,8 @@
 [build]
-  functions = "functions"
+  functions = "functions"  # Вказує на папку, де зберігаються функції
+  publish = "public"       # Вказує на папку, де зберігаються статичні файли
 
 [[redirects]]
   from = "/api/*"
-  to = "/.netlify/functions/:splat"
+  to = "/.netlify/functions/app"
   status = 200
