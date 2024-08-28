@@ -6,24 +6,20 @@ from rembg import remove
 
 app = Flask(__name__)
 
-@app.route('/remove-background', methods=['POST'])
+@app.route('/.netlify/functions/app', methods=['POST'])
 def remove_background():
     try:
-        # Перевірте, чи є дані у запиті
         data = request.get_json()
         if 'body' not in data:
             return jsonify({'error': 'No body in request'}), 400
 
-        # Отримання зображення з запиту
         base64_image = data['body']
         image_bytes = base64.b64decode(base64_image)
         input_image = Image.open(BytesIO(image_bytes))
         input_image = input_image.convert("RGBA")
 
-        # Видалення фону
         output_image = remove(input_image)
 
-        # Збереження результату в буфер
         output_buffer = BytesIO()
         output_image.save(output_buffer, format='PNG')
         output_buffer.seek(0)
